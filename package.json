@@ -1,0 +1,24 @@
+{
+  "name": "node-express-postgres",
+  "version": "1.0.0",
+  "description": "CRUD operations for a simple job table",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HYuanAi/node-express-postgres.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HYuanAi/node-express-postgres/issues"
+  },
+  "homepage": "https://github.com/HYuanAi/node-express-postgres#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.5.1"
+  }
+}
