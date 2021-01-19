@@ -57,7 +57,6 @@ const updateJob: RequestHandler = (req, res) => {
         .where('id', id)
         .update(req.body)
         .then(rows => {
-            console.log(rows);
             res.sendStatus(200);
         });
 };
