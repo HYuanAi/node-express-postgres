@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import cors from 'cors';
 
 const app = express(); 
-const port: number = 3000;
+const port: number = 3001;
 
 const router = Router();
 
