@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import db from './data/db';
+import db, { Job } from './data/db';
 
 const JOB_TABLE_NAME = "job";
 
@@ -20,11 +20,19 @@ const getJobs: RequestHandler = (req, res) => {
     const offset = (pageNumber - 1) * pageSize; 
 
     db(JOB_TABLE_NAME)
-        .offset(offset)
-        .limit(pageSize)
-        .then(jobs => {
-            res.status(200).json(jobs);
-        });
+        .count('id as TOTAL_COUNT')
+        .then(count => 
+            db(JOB_TABLE_NAME)
+                .offset(offset)
+                .limit(pageSize)
+                .then(jobs => {
+                    res.status(200).json({
+                        totalCount: (count[0] as any).TOTAL_COUNT, 
+                        jobs: jobs
+                    });
+                })
+        );
+    
 };
 
 const getJob: RequestHandler = (req, res) => {
@@ -32,8 +40,11 @@ const getJob: RequestHandler = (req, res) => {
 
     db(JOB_TABLE_NAME)
         .where('id', id)
+        .first()
         .then(job => {
-            if (job) res.status(200).json(job);
+            if (job) {
+                res.status(200).json(job);
+            }
             else res.sendStatus(404);
         })
 };
@@ -58,7 +69,7 @@ const deleteJob: RequestHandler = (req, res) => {
         .where('id', id)
         .del()
         .then(count => {
-            console.log("deleted $(count) rows");
+            console.log(`deleted $(count) rows`);
             if (count == 0) res.sendStatus(404);
             else res.sendStatus(200);
         })
