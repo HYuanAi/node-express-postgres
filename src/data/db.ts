@@ -1,9 +1,11 @@
 import knex from 'knex';
 import pg from 'pg';
+import { format } from 'date-fns';
+
 
 const knexfile = require('../../knexfile');
 const env = process.env.NODE_ENV || 'development';
-pg.types.setTypeParser(1082, (value) => new Date(value).toISOString().substr(0, 10));
+pg.types.setTypeParser(1082, (value) => format(new Date(value), 'yyyy-MM-dd'));
 const configOptions = knexfile[env];
 
 export interface Job {
