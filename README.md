@@ -1,5 +1,5 @@
 # node-express-postgres
-CRUD operations for a simple job table
+CRUD operations for a simple job table. Check out the [user interface](https://github.com/HYuanAi/react-crud) built with ReactJS.
 
 ## Available Scripts
 
