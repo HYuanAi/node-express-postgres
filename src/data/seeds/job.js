@@ -7,6 +7,20 @@ exports.seed = function(knex) {
       return knex('job').insert([
         { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
         { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
+        { title: 'Software Developer', description: 'Full Stack Developer', expiry_date: '2021-03-09' },
+        { title: 'Executive', description: 'Operational executive to coordinate customers.', expiry_date: '2021-03-08' },
       ]);
     });
 };
