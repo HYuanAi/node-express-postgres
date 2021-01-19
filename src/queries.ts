@@ -69,7 +69,7 @@ const deleteJob: RequestHandler = (req, res) => {
         .where('id', id)
         .del()
         .then(count => {
-            console.log(`deleted $(count) rows`);
+            console.log(`deleted ${count} rows`);
             if (count == 0) res.sendStatus(404);
             else res.sendStatus(200);
         })
