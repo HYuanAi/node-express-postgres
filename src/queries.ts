@@ -1,77 +1,55 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, response } from 'express';
 import db from './data/db';
 
 const JOB_TABLE_NAME = "job";
 
 // Create Job
-const createJob: RequestHandler = (req, res) => {
-    db(JOB_TABLE_NAME)
-        .insert(req.body)
-        .then(job => {
-            res.status(201).json(job);
-        });
+const createJob: RequestHandler = async (req, res) => {
+    const response = await db(JOB_TABLE_NAME).insert(req.body);
+    res.status(201).json(response);
 };
 
 // Retrieve jobs by page or by id
-const getJobs: RequestHandler = (req, res) => {
+const getJobs: RequestHandler = async (req, res) => {
     const page = Object(req.query.page); 
     const pageNumber = page.number || 1; 
     const pageSize = page.size || 5;
     const offset = (pageNumber - 1) * pageSize; 
 
-    db(JOB_TABLE_NAME)
-        .count('id as TOTAL_COUNT')
-        .then(count => 
-            db(JOB_TABLE_NAME)
-                .offset(offset)
-                .limit(pageSize)
-                .then(jobs => {
-                    res.status(200).json({
-                        totalCount: (count[0] as any).TOTAL_COUNT, 
-                        jobs: jobs
-                    });
-                })
-        );
+    const count = await db(JOB_TABLE_NAME).count('id as TOTAL_COUNT');
+
+    const jobs = await db(JOB_TABLE_NAME).offset(offset).limit(pageSize);
+    res.status(200).json({
+        totalCount: (count[0] as any).TOTAL_COUNT,
+        jobs: jobs
+    });
 };
 
-const getJob: RequestHandler = (req, res) => {
+const getJob: RequestHandler = async (req, res) => {
     const id: number = parseInt(req.params.id);
 
-    db(JOB_TABLE_NAME)
-        .where('id', id)
-        .first()
-        .then(job => {
-            if (job) {
-                res.status(200).json(job);
-            }
-            else res.sendStatus(404);
-        })
+    const job = await db(JOB_TABLE_NAME).where('id', id).first();
+    if (job) res.status(200).json(job);
+    else res.sendStatus(404);
 };
 
 // Update job by id
-const updateJob: RequestHandler = (req, res) => {
+const updateJob: RequestHandler = async (req, res) => {
     const id: number = Number(req.params.id);
 
-    db(JOB_TABLE_NAME)
-        .where('id', id)
-        .update(req.body)
-        .then(count => {
-            console.log(`updated ${count} rows`);
-            res.sendStatus(200);
-        });
+    const count = await db(JOB_TABLE_NAME).where('id', id).update(req.body);
+    console.log(`Updated ${count} row(s)`);
+    res.sendStatus(200);
 };
 
 // Delete job by id
-const deleteJob: RequestHandler = (req, res) => {
+const deleteJob: RequestHandler = async (req, res) => {
     const id: number = Number(req.params.id);
-    db(JOB_TABLE_NAME)
-        .where('id', id)
-        .del()
-        .then(count => {
-            console.log(`deleted ${count} rows`);
-            if (count == 0) res.sendStatus(404);
-            else res.sendStatus(200);
-        })
+
+    const count = await db(JOB_TABLE_NAME).where('id', id).del();
+    console.log(`Deleted ${count} row(s)`);
+    if (count === 0) res.sendStatus(404);
+    else res.sendStatus(200);
 };
 
 export default {
