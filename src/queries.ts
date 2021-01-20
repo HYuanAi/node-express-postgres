@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import db, { Job } from './data/db';
+import db from './data/db';
 
 const JOB_TABLE_NAME = "job";
 
@@ -30,7 +30,7 @@ const getJobs: RequestHandler = (req, res) => {
                         totalCount: (count[0] as any).TOTAL_COUNT, 
                         jobs: jobs
                     });
-                })
+                });
         );
     
 };
@@ -56,7 +56,8 @@ const updateJob: RequestHandler = (req, res) => {
     db(JOB_TABLE_NAME)
         .where('id', id)
         .update(req.body)
-        .then(rows => {
+        .then(count => {
+            console.log(`updated ${count} rows`);
             res.sendStatus(200);
         });
 };
