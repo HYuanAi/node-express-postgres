@@ -30,9 +30,8 @@ const getJobs: RequestHandler = (req, res) => {
                         totalCount: (count[0] as any).TOTAL_COUNT, 
                         jobs: jobs
                     });
-                });
+                })
         );
-    
 };
 
 const getJob: RequestHandler = (req, res) => {
